@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# loob kaks faili milles ühes on kasutajanimed teises paroolid
+if [ $# -ne 2 ]; then
+    echo "Kasutusjuhend: $0 kasutajad paroolid"
+else
+  kasutajad=$1
+  paroolid=$2
+  if [ -f $kasutajad -a -r $kasutajad ] && [ -f $paroolid -a -r $paroolid ]; then
+    echo "Fail töötab vastavalt skriptile"
+    for rida in $(paste -d: $kasutajad $paroolid)
+    do
+        kasutajanimi=$(echo "$rida" | cut -f1 -d:)
+        sh lisakasutaja $kasutajanimi
+        echo "$rida" | chpasswd
+      done
+  else
+    echo "Probleem peitub failis $failinimi"
+  fi
+#parameetrite kontrolli lõpp
+fi
+
