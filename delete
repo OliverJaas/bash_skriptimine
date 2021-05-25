@@ -1,0 +1,8 @@
+#!/bin/ksh
+#
+# eemaldab kasutajad mis on kirjutatud ette dellist.txt faili
+cat dellist.txt | while read user
+do
+        echo "Deleting: ${user}"
+        echo userdel -r "${user}"
+done
