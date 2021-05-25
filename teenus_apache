@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+#Kõigepealt kontrollib skript kas Apache service on installitud või mitte
+#
+apache=$(dpkg --status apache2 | grep -c "ok installed")
+# kui Apache pole installitud ehk -eq = 0, siis installib skript Apache2 automaatselt
+if [ $apache -eq 0 ]; then
+	echo "Toimub apache paigaldus"
+	apt install apache2 -y
+	echo "Apache on installitud"
+#Kui apache on juba installitud ehk -eq =  1, siis annab skript teada et apache2 on juba paigaldatud
+elif [ $apache -eq 1 ]; then
+	echo "Apache2 on juba installitud"
+	#panen Apache service tööle, annan teada et juba installitud
+	service apache2 start
+	service apache2 status
+#tingimuslause lõpp
+fi
